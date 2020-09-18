@@ -1,0 +1,44 @@
+#!/usr/bin/env -S docker-compose -p reg -f
+version: "3.5"
+
+networks:
+  mainnet:
+    driver: bridge
+    internal: false
+    external: false
+    attachable: true
+
+volumes:
+  registry:
+    driver: local
+
+services:
+
+  gateway:
+    image: nginx:stable
+    restart: on-failure
+    networks:
+    - mainnet
+    ports:
+    -  80:80/tcp
+    - 443:443/tcp
+    volumes:
+    - ./:/etc/nginx/conf.d:ro
+
+  registry:
+    image: registry:2
+    restart: on-failure
+    environment:
+      REGISTRY_PROXY_USERNAME: ""
+      REGISTRY_PROXY_PASSWORD: ""
+      REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
+      REGISTRY_HTTP_ADDR: :5000
+      REGISTRY_AUTH: silly
+      REGISTRY_AUTH_SILLY_REALM: http://${HOSTNAME:-localhost}/silly/
+      REGISTRY_AUTH_SILLY_SERVICE: registry.docker.io
+    networks:
+    - mainnet
+    ports:
+    - 5000:5000/tcp
+    volumes:
+    - registry:/var/lib/registry
