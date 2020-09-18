@@ -29,9 +29,9 @@ services:
     image: registry:2
     restart: on-failure
     environment:
-      REGISTRY_PROXY_USERNAME: ""
-      REGISTRY_PROXY_PASSWORD: ""
-      REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
+      #REGISTRY_PROXY_USERNAME: ""
+      #REGISTRY_PROXY_PASSWORD: ""
+      #REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
       REGISTRY_HTTP_ADDR: :5000
       REGISTRY_AUTH: silly
       REGISTRY_AUTH_SILLY_REALM: http://${HOSTNAME:-localhost}/silly/
