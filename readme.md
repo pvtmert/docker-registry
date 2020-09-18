@@ -48,3 +48,8 @@ For example, since registry is a mirror, you can pull `busybox` via:
 `docker pull 127.0.0.1/library/busybox` (replacing 127.0.0.1 with your hostname
 or IP) this will pull image to registry then provide to you. Subsequent pulls
 will use registry as a cache server...
+
+## Switch between 'pushable' and 'cache' registry types
+
+- Comment out environment variables starting with `REGISTRY_PROXY_` makes registry **cache**
+- Without `REGISTRY_PROXY_*` variables, registry act as **pushable**.
